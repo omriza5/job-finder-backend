@@ -10,8 +10,9 @@ const createUser = async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
-  /** check if user exists */
   let user = await User.findOne({ email: req.body.email });
+
+  /** case user exists */
   if (user) {
     return res
       .status(400)
@@ -19,9 +20,11 @@ const createUser = async (req, res) => {
   }
 
   try {
+    /** hash all passwords */
     const hashedAppPass = await hashPassword(req.body.password);
     const hashedLinkedinPass = await hashPassword(req.body.linkedinPassword);
     const hashedFacebookPass = await hashPassword(req.body.facebookPassword);
+
     user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -32,8 +35,10 @@ const createUser = async (req, res) => {
       facebookUsername: req.body.facebookUsername,
       facebookPassword: hashedFacebookPass,
     });
+
     user = await user.save();
 
+    /** generate a jwt */
     const token = jwt.sign(
       {
         _id: user._id,
