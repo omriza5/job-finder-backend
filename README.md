@@ -15,14 +15,14 @@
 - **URL Params**
   `none`
 - **Request Body**
-  firstName: String
-  lastName:String
-  email:String
-  password:String
-  linkedinUsername:String
-  linkedinPassword:String
-  facebookUsername:String
-  facebookPassword:String
+  firstName: String <br />
+  lastName:String <br />
+  email:String <br />
+  password:String <br />
+  linkedinUsername:String <br />
+  linkedinPassword:String <br />
+  facebookUsername:String <br />
+  facebookPassword:String <br />
 
 - **Required:**
   `All fields are required`
@@ -41,4 +41,4 @@
   OR
 
   - **Code:** 500 Internal Server Error
-    **Content:** `#createUser: Somthing went wrong!`
+  - **Content:** `#createUser: Somthing went wrong!`
