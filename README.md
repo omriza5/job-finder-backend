@@ -51,3 +51,34 @@
 
   - **Code:** 500 Internal Server Error
   - **Content:** `#createUser: Somthing went wrong!`
+
+### User login:
+
+- **URL**
+  /api/auth
+- **Method:**
+  `POST`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+  email:String <br />
+  password:String <br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200
+  - **Content:** `Json Web Token`
+  - Token Payload: { \_id, firstName, lastName, email }
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `Invalid password.`
+
+  OR
+
+  - **Code:** 404 NOT FOUND
+  - **Content:** `User not found, register please`
