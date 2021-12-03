@@ -82,3 +82,29 @@
 
   - **Code:** 404 NOT FOUND
   - **Content:** `User not found, register please`
+
+### Linkedin crawl:
+
+- **URL**
+  /api/crawl/linkedin
+- **Method:**
+  `POST`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+  filterOptions:{ \datePosted:String, experienceLevel:String, jobType:String } <br />
+  platform:String <br />
+  platformPass:String <br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `to be updated`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `Invalid platform password.`
