@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  mongoose.connect("mongodb://localhost:27017/jobFinder", () => {
+  mongoose.connect(process.env.DB_DEV_URL, () => {
     console.log("Connected to mongodb...");
   });
 };
