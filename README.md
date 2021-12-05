@@ -2,6 +2,7 @@
 
 1. [ Description. ](#desc)
 2. [ REST API. ](#restApi)
+3. [ Middlewares. ](#middlewares)
 
 <a name="desc"></a>
 
@@ -92,7 +93,7 @@
 - **URL Params**
   `none`
 - **Request Body** <br />
-  filterOptions:{ \datePosted:String, experienceLevel:String, jobType:String } <br />
+  filterOptions:{ datePosted: String, job: String, experienceLevel: String, location:String } <br />
   platform:String <br />
   platformPass:String <br />
 
@@ -108,3 +109,21 @@
 
   - **Code:** 400 BAD REQUEST <br />
     **Content:** `Invalid platform password.`
+
+<a name="middlewares"></a>
+
+# Midllewares
+
+### Auth:
+
+adds a user object to request.body if the client sent a valid json web token.<br />
+payload:{ \_id, firstName, lastName, email} <br />
+
+### Decrypt By Platform:
+
+determines the wanted platform for crawling using request.body.platform.<br />
+validate platform password.<br />
+adds to request.body two props:<br />
+
+1. username
+2. password

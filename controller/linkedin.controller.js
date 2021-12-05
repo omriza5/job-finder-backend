@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 const { sleepFor } = require("./utils");
+const { storeJobs } = require("../controller/jobs.controller");
+
 const LINKEDIN_LOGIN_URL = process.env.LINKEDIN_URL;
 
 const runLinkedinCrawling = async (req, res) => {
@@ -53,9 +55,11 @@ const runLinkedinCrawling = async (req, res) => {
     const jobs = await extractJobs(page);
 
     /**store jobs in db */
+    const updatedUser = await storeJobs(jobs, req.user._id, req.body.platform);
+    return res.status(200).send(updatedUser);
   } catch (error) {
     console.log("ERROR: ", error);
-    // res.status(500).send(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -183,7 +187,7 @@ const extractJobs = async (page) => {
 
           items.push({
             key: job.dataset.jobId,
-            jobTitle:
+            title:
               job.querySelector(
                 ".job-card-container__link.job-card-list__title"
               ) &&
@@ -203,7 +207,7 @@ const extractJobs = async (page) => {
             location:
               job.querySelector(".job-card-container__metadata-item") &&
               job.querySelector(".job-card-container__metadata-item").innerText,
-            url: job.querySelector(".job-card-list__title").href,
+            link: job.querySelector(".job-card-list__title").href,
           });
         }
       }

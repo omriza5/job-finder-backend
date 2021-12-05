@@ -3,7 +3,6 @@ const { User } = require("../models/user.model");
 
 const decryptByPlatform = async (req, res, next) => {
   const user = await User.findById(req.user._id);
-
   const username =
     req.body.platform === "linkedin"
       ? user.linkedinUsername
