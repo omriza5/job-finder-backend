@@ -1,6 +1,5 @@
 const { Job } = require("../models/job.model");
 const { Platform } = require("../models/platform.model");
-const Joi = require("joi");
 const { User } = require("../models/user.model");
 
 const storeJobs = async (jobs, userId, platform) => {
@@ -30,15 +29,19 @@ const createJob = async (job, platform) => {
   });
   return await newJob.save();
 };
-// const jobSchema = Joi.object({
-//   Key: Joi.string(),
-//   title: Joi.string().min(3).required(),
-//   company: Joi.string().min(3),
-//   mode: Joi.string().min(3),
-//   location: Joi.string().min(3),
-//   link: Joi.string().min(10),
-// });
+
+const getAllJobs = async (req, res, userId) => {
+  try {
+    const jobs = await User.findById(userId)
+      .populate("jobs")
+      .select("jobs -_id");
+    res.status(200).send(jobs);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
 module.exports = {
   storeJobs,
+  getAllJobs,
 };
