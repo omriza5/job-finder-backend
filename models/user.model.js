@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { jobSchema } = require("./job.model");
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     trim: true,
   },
-  jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
+  jobs: [jobSchema],
 });
 
 const User = mongoose.model("User", userSchema);
