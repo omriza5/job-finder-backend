@@ -6,8 +6,7 @@ const storeJobs = async (jobs, userId, platform) => {
   try {
     const wantedPlatform = await Platform.findOne({ name: platform });
     const user = await User.findById(userId);
-    {
-    }
+
     for (let job of jobs) {
       const found = await User.findOne({
         _id: user._id,

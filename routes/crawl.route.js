@@ -9,7 +9,7 @@ router.post("/linkedin", [auth, decryptByPlatform], (req, res) => {
   runLinkedinCrawling(req, res);
 });
 
-router.post("/facebook", (req, res) => {
+router.post("/facebook", [auth, decryptByPlatform], (req, res) => {
   runFacebookCrawling(req, res);
 });
 

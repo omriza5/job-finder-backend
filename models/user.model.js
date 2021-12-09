@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { jobSchema } = require("./job.model");
+const { postSchema } = require("./post.model");
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -56,6 +57,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   jobs: [jobSchema],
+  posts: [postSchema],
 });
 
 const User = mongoose.model("User", userSchema);
