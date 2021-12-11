@@ -13,7 +13,7 @@ const runLinkedinCrawling = async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
       args: ["--no-sandbox"],
-      // defaultViewport: { width: 1920, height: 1080 },
+      defaultViewport: { width: 1920, height: 1080 },
     });
 
     /** open a new tab */
@@ -57,7 +57,7 @@ const runLinkedinCrawling = async (req, res) => {
 
     /**store jobs in db */
     const updatedUser = await storeJobs(jobs, req.user._id, req.body.platform);
-
+    await browser.close();
     res.status(200).send(updatedUser);
   } catch (error) {
     console.log("ERROR: ", error);
@@ -156,11 +156,6 @@ const setExperienceLevel = async (page, experienceLevel) => {
       return null;
   }
 
-  // await page.evaluate(() => {
-  //   const experiencBtn = document.querySelector(
-  //     "#search-reusables__filters-bar>ul>li:nth-child(4)>div>span>button"
-  //   );
-  // });
   experiencBtn.click();
 };
 
