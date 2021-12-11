@@ -22,13 +22,13 @@ A web application for finding relevant jobs via Linkedin and Facebook.
 # DB Collections
 
 <a name="dbCollections"></a>
-![](https://ibb.co/LZ8G7G8)
+![](https://i.ibb.co/yQX3j3X/db-Collections.png)
 
 <a name="linkedinCrawl"></a>
 
 # Linkedin Crawl
 
-![](https://ibb.co/p3bnH82)
+![](https://i.ibb.co/fCqQ35M/linkedin-crawl.png)
 
 <a name="restApi"></a>
 
