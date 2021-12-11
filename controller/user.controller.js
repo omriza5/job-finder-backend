@@ -36,8 +36,8 @@ const createUser = async (req, res) => {
       facebookPassword: hashedFacebookPass,
     });
 
+    console.log(user);
     user = await user.save();
-
     /** generate a jwt */
     const token = jwt.sign(
       {
@@ -51,7 +51,7 @@ const createUser = async (req, res) => {
 
     res.status(201).send(token);
   } catch (error) {
-    res.status(500).send("#createUser: Somthing went wrong!");
+    res.status(500).send("#createUser: Somthing went wrong!", error);
   }
 };
 

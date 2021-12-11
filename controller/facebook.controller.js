@@ -90,7 +90,8 @@ const extractPosts = async (page) => {
 const preparePosts = (posts) => {
   return posts.map((post) => {
     const index = post.indexOf("Like");
-    if (index != -1) return post.substring(0, index);
+    if (index != -1)
+      return post.substring(0, index).replace(["."], "\n").replace("·", "\n");
 
     return post;
   });

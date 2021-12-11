@@ -13,8 +13,13 @@ const storeJobs = async (jobs, userId, platform) => {
         jobs: { $elemMatch: { key: job.key } },
       });
       if (!found) {
-        const storedJob = await createJob(job, wantedPlatform);
-        user.jobs.push(storedJob);
+        // const storedJob = await createJob(job, wantedPlatform);
+        user.jobs.push(
+          new Job({
+            ...job,
+            platform: { _id: wantedPlatform._id, name: wantedPlatform.name },
+          })
+        );
       }
     }
 
@@ -37,8 +42,8 @@ const getAllJobs = async (req, res) => {
   const userId = req.params.userId;
   try {
     const user = await User.findById(userId);
-
-    res.status(200).send(user.jobs);
+    const relevantJobs = user.jobs.filter((p) => p.isRelevant);
+    res.status(200).send(relevantJobs);
   } catch (error) {
     res.status(400).send(error);
   }
@@ -46,17 +51,72 @@ const getAllJobs = async (req, res) => {
 
 const deleteJob = async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
-    user.jobs = user.jobs.filter(
-      (job) => job._id.toString() !== req.body.jobId
+    const user = await User.findOneAndUpdate(
+      {
+        _id: req.body.userId,
+        jobs: { $elemMatch: { _id: req.body.jobId } },
+      },
+      {
+        $set: {
+          "jobs.$.isRelevant": false,
+        },
+      },
+      { new: true }
     );
-    await user.save();
-    res.status(200).send(user.jobs);
-  } catch (error) {}
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+/** updating "applied" and "applyDate" props of a given job */
+const updateJob = async (req, res) => {
+  try {
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const user = await User.findOneAndUpdate(
+      {
+        _id: req.body.userId,
+        jobs: { $elemMatch: { _id: req.body.jobId } },
+      },
+      {
+        $set: {
+          "jobs.$.applied": true,
+          "jobs.$.applyDate": currentDate,
+          "jobs.$.status": "CV Sent",
+        },
+      },
+      { new: true }
+    );
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+const updateJobStatus = async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      {
+        _id: req.body.userId,
+        jobs: { $elemMatch: { _id: req.body.jobId } },
+      },
+      {
+        $set: {
+          "jobs.$.status": req.body.status,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
 module.exports = {
   storeJobs,
   getAllJobs,
   deleteJob,
+  updateJob,
+  updateJobStatus,
 };

@@ -3,7 +3,7 @@ const { platformSchema } = require("../models/platform.model");
 const jobSchema = new mongoose.Schema({
   key: {
     type: String,
-    unique: true,
+    // unique: true,
     default: null,
   },
   title: {
@@ -45,7 +45,11 @@ const jobSchema = new mongoose.Schema({
     default: true,
   },
   applyDate: {
-    type: Date,
+    type: String,
+    default: null,
+  },
+  status: {
+    type: String,
     default: null,
   },
   platform: {

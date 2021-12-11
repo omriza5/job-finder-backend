@@ -56,7 +56,8 @@ const runLinkedinCrawling = async (req, res) => {
 
     /**store jobs in db */
     const updatedUser = await storeJobs(jobs, req.user._id, req.body.platform);
-    return res.status(200).send(updatedUser);
+
+    res.status(200).send(updatedUser);
   } catch (error) {
     console.log("ERROR: ", error);
     return res.status(500).send(error);
@@ -154,7 +155,12 @@ const setExperienceLevel = async (page, experienceLevel) => {
       return null;
   }
 
-  await experiencBtn.click();
+  // await page.evaluate(() => {
+  //   const experiencBtn = document.querySelector(
+  //     "#search-reusables__filters-bar>ul>li:nth-child(4)>div>span>button"
+  //   );
+  // });
+  experiencBtn.click();
 };
 
 const navigateToJobsPage = async (page) => {
