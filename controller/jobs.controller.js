@@ -1,7 +1,9 @@
 const { Job } = require("../models/job.model");
+const { sendMail } = require("../services/mailService");
 const { Platform } = require("../models/platform.model");
 const { User } = require("../models/user.model");
-
+const path = require("path");
+const fs = require("fs");
 const storeJobs = async (jobs, userId, platform) => {
   try {
     const wantedPlatform = await Platform.findOne({ name: platform });
@@ -113,10 +115,33 @@ const updateJobStatus = async (req, res) => {
   }
 };
 
+const applyJob = async (req, res) => {
+  console.log("heyy", req.body);
+  const file = req.files.file;
+  console.log("heyy", file);
+  sendMail({
+    from: "omriza5@gmail.com",
+    to: "omriza5@gmail.com",
+    subject: req.body.subject,
+    text: req.body.body,
+    attachments: [
+      {
+        filename: "Omri_Zaher.pdf",
+        // path: path.join(__dirname, "../cv/Omri_Zaher.pdf"),
+        content: fs.createReadStream(
+          path.resolve(__dirname, "../cv/Omri_Zaher.pdf")
+        ),
+        contentType: "application/pdf",
+      },
+    ],
+  });
+};
+
 module.exports = {
   storeJobs,
   getAllJobs,
   deleteJob,
   updateJob,
   updateJobStatus,
+  applyJob,
 };

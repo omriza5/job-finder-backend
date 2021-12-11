@@ -1,10 +1,10 @@
 const express = require("express");
-
 const {
   getAllJobs,
   deleteJob,
   updateJob,
   updateJobStatus,
+  applyJob,
 } = require("../controller/jobs.controller");
 const router = express.Router();
 
@@ -22,5 +22,9 @@ router.put("/", (req, res) => {
 });
 router.put("/status", (req, res) => {
   updateJobStatus(req, res);
+});
+
+router.post("/apply", (req, res) => {
+  applyJob(req, res);
 });
 module.exports = router;

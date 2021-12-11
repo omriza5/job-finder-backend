@@ -1,12 +1,34 @@
 # Table Of Content
 
 1. [ Description. ](#desc)
-2. [ REST API. ](#restApi)
-3. [ Middlewares. ](#middlewares)
+2. [Technologies](#tech)
+3. [DB Collections](#dbCollections)
+4. [Linkedin crawl](#linkedinCrawl)
+5. [ REST API. ](#restApi)
+6. [ Middlewares. ](#middlewares)
 
 <a name="desc"></a>
 
 # Decription
+
+A web application for finding relevant jobs via Linkedin and Facebook.
+
+<a name="tech"></a>
+
+# Technologies
+
+-**Front-End**: ReactJS, HTML5, CSS, MaterialUI -**Back-End**: NodeJS, Express, MongoDB, Puppeteer
+
+# DB Collections
+
+<a name="dbCollections"></a>
+![](https://ibb.co/LZ8G7G8)
+
+<a name="linkedinCrawl"></a>
+
+# Linkedin Crawl
+
+![](https://ibb.co/p3bnH82)
 
 <a name="restApi"></a>
 
@@ -14,12 +36,12 @@
 
 ---
 
-## BaseURL: http://localhost/5000
+## BaseURL: https://job-finder-be.herokuapp.com/api
 
 ### Create A New User:
 
 - **URL**
-  /api/users
+  /users
 - **Method:**
   `POST`
 - **URL Params**
@@ -56,7 +78,7 @@
 ### User login:
 
 - **URL**
-  /api/auth
+  /auth
 - **Method:**
   `POST`
 - **URL Params**
@@ -87,7 +109,7 @@
 ### Linkedin crawl:
 
 - **URL**
-  /api/crawl/linkedin
+  /crawl/linkedin
 - **Method:**
   `POST`
 - **URL Params**
@@ -103,14 +125,189 @@
 - **Success Response:**
 
   - **Code:** 200 <br />
-  - **Content:** `to be updated`
+  - **Content:** `user object with new jobs`
 
 - **Error Response:**
 
   - **Code:** 400 BAD REQUEST <br />
     **Content:** `Invalid platform password.`
 
-<a name="middlewares"></a>
+### Facebook crawl:
+
+- **URL**
+  /crawl/facebook
+- **Method:**
+  `POST`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+  job:string,
+  platform:string,
+  platformPass:string,
+  groupPath:string <br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `user object with new posts`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `Invalid platform password.`
+
+### Get Jobs by user id:
+
+- **URL**
+  /jobs
+- **Method:**
+  `GET`
+- **URL Params**
+  `userid`
+- **Request Body**
+  `none`
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `array of job objects`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+
+### Delete a job:
+
+- **URL**
+  /jobs
+- **Method:**
+  `DELETE`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+  jobId:`string`,
+  userId:`string` <br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `updated user object`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+
+### Update job apply date:
+
+- **URL**
+  /jobs
+- **Method:**
+  `PUT`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+- jobId:`string`,
+  userId:`string`<br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `updated user object`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+
+### Update job status:
+
+- **URL**
+  /jobs/status
+- **Method:**
+  `PUT`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+- jobId:`string`,
+  userId:`string`,
+  status:`string`<br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `updated user object`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+
+### Get posts by user id:
+
+- **URL**
+  /posts
+- **Method:**
+  `GET`
+- **URL Params**
+  `userid`
+- **Request Body**
+  `none`
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `array of posts objects`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+
+### Delete a post:
+
+- **URL**
+  /posts
+- **Method:**
+  `DELETE`
+- **URL Params**
+  `none`
+- **Request Body** <br />
+  postId:`string`,
+  userId:`string` <br />
+
+- **Required:**
+  `All fields are required`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+  - **Content:** `updated user object`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `error object`
+    <a name="middlewares"></a>
 
 # Midllewares
 
