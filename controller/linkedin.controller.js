@@ -11,8 +11,9 @@ const runLinkedinCrawling = async (req, res) => {
 
     /** launch chromium */
     const browser = await puppeteer.launch({
-      headless: false,
-      defaultViewport: { width: 1920, height: 1080 },
+      headless: true,
+      args: ["--no-sandbox"],
+      // defaultViewport: { width: 1920, height: 1080 },
     });
 
     /** open a new tab */
