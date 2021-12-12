@@ -11,13 +11,16 @@
 
 # Decription
 
-A web application for finding relevant jobs via Linkedin and Facebook.
+A web application for finding relevant jobs via Linkedin and Facebook, and keep tracking
+the progress of applied jobs.
 
 <a name="tech"></a>
 
 # Technologies
 
--**Front-End**: ReactJS, HTML5, CSS, MaterialUI -**Back-End**: NodeJS, Express, MongoDB, Puppeteer
+![](https://miro.medium.com/max/3000/1*moL1HY_pEqW0TisE7Vh6gg.png) <br/> -**Front-End**: ReactJS, HTML5, CSS, MaterialUI <br /> -**Back-End**: NodeJS, Express, MongoDB, Puppeteer
+
+![](https://i.ibb.co/XYnV7hM/system-Diag.png)
 
 # DB Collections
 
