@@ -2,8 +2,8 @@ const { Job } = require("../models/job.model");
 const { sendMail } = require("../services/mailService");
 const { Platform } = require("../models/platform.model");
 const { User } = require("../models/user.model");
-const path = require("path");
-const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
+
 const storeJobs = async (jobs, userId, platform) => {
   try {
     const wantedPlatform = await Platform.findOne({ name: platform });
@@ -15,7 +15,6 @@ const storeJobs = async (jobs, userId, platform) => {
         jobs: { $elemMatch: { key: job.key } },
       });
       if (!found) {
-        // const storedJob = await createJob(job, wantedPlatform);
         user.jobs.push(
           new Job({
             ...job,
@@ -38,6 +37,32 @@ const createJob = async (job, platform) => {
     platform: { _id: platform._id, name: platform.name },
   });
   return await newJob.save();
+};
+
+const addJob = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const user = await User.findById(userId);
+    const job = new Job({
+      key: uuidv4(),
+      title: req.body.title,
+      company: req.body.company,
+      location: req.body.location,
+      notes: req.body.notes,
+      link: req.body.link,
+      mode: "On-site",
+      applied: true,
+      isRelevant: true,
+      applyDate: new Date().toISOString().slice(0, 10),
+      status: "CV Sent",
+    });
+    user.jobs.push(job);
+    await user.save();
+
+    res.status(201).send(job);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
 const getAllJobs = async (req, res) => {
@@ -115,10 +140,9 @@ const updateJobStatus = async (req, res) => {
   }
 };
 
+/** not working yet */
 const applyJob = async (req, res) => {
-  console.log("heyy", req.body);
-  const file = req.files.file;
-  console.log("heyy", file);
+  console.log("hello: ", req.file);
   sendMail({
     from: "omriza5@gmail.com",
     to: "omriza5@gmail.com",
@@ -126,12 +150,9 @@ const applyJob = async (req, res) => {
     text: req.body.body,
     attachments: [
       {
-        filename: "Omri_Zaher.pdf",
-        // path: path.join(__dirname, "../cv/Omri_Zaher.pdf"),
-        content: fs.createReadStream(
-          path.resolve(__dirname, "../cv/Omri_Zaher.pdf")
-        ),
-        contentType: "application/pdf",
+        filename: "Back.jpg",
+        path: "../uploads/Back.jpg",
+        // contentType: "application/pdf",
       },
     ],
   });
@@ -144,4 +165,5 @@ module.exports = {
   updateJob,
   updateJobStatus,
   applyJob,
+  addJob,
 };

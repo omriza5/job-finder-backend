@@ -9,12 +9,12 @@ const platforms = require("./routes/platform.route");
 const jobs = require("./routes/job.route");
 const groups = require("./routes/group.route");
 const posts = require("./routes/post.route");
-
 /** mongodb connection */
 require("./db/mongoose")();
 
 app.use(cors());
-app.use(upload());
+// app.use(upload());
+// app.static();
 app.use(express.json());
 app.use("/api/users", users);
 app.use("/api/auth", auth);
